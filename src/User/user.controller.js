@@ -43,8 +43,41 @@ const getAllUsers = async(req,res)=> {
         }
     }
 
+    const deleteUser = async(req,res)=> {
+        try {
+            const id = req.params.id
+            const deletedUser = await Users.findByIdAndDelete({_id : id})
+            res.status(200).json({
+                deletedUser
+            })
+        } catch (error) {
+            res.status(500).json({
+                error
+            })
+        }
+    }
+
+
+    const updateUser = async (req, res) => {
+        try {
+          const id = req.params.id;
+        
+          const updatedUser = await Users.findByIdAndUpdate(id, req.body, { new: true });
+          res.status(200).json({
+            updatedUser,
+          });
+        } catch (error) {
+          res.status(500).json({
+            error,
+          });
+        }
+      };
+      
+
 module.exports = {
     createUser,
     getAllUsers,
-    getSingleUser
+    getSingleUser,
+    deleteUser,
+    updateUser
 }
